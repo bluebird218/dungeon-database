@@ -17,7 +17,8 @@ class Character:
         print(f"{self.name} has leveled up to level {self.level}!")
         
     def new_spells(self):
-        pass
+        new_spell = input("You get a new spell! Which would you like? ")
+        self.spells.append(new_spell)
 
     def __str__(self):
         return f"{self.name} is a level {self.level} {self.title} with {self.max_health} total hit points."
