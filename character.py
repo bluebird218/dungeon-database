@@ -1,7 +1,7 @@
 from random import randrange
 
 class Character:
-    def __init__(self, name, level, hit_dice, title, spellcaster):
+    def __init__(self, name, level, hit_dice, title, spellcaster, subclass_level):
         self.name = name
         self.level = level
         self.feats = []
@@ -21,16 +21,40 @@ class Character:
                 stat_dice.remove(min(stat_dice))
                 stats_to_assign.append(sum(stat_dice))
             print(f"Attribute scores to assign: {stats_to_assign}")
-        self.attributes["STR"] = int(input("Set strength: "))
-        self.attributes["DEX"] = int(input("Set dexterity: "))
-        self.attributes["CON"] = int(input("Set constitution: "))
-        self.attributes["WIS"] = int(input("Set wisdom: "))
-        self.attributes["INT"] = int(input("Set intelligence: "))
-        self.attributes["CHA"] = int(input("Set charisma: "))
+            assign_automatically = input("Would you like these to be assigned automatically? Y/N: ").lower()
+            if assign_automatically == "y":
+                self.attributes["STR"] = stats_to_assign[0]
+                self.attributes["DEX"] = stats_to_assign[1]
+                self.attributes["CON"] = stats_to_assign[2]
+                self.attributes["WIS"] = stats_to_assign[3]
+                self.attributes["INT"] = stats_to_assign[4]
+                self.attributes["CHA"] = stats_to_assign[5]
+            else:
+                self.attributes["STR"] = int(input("Set strength: "))
+                self.attributes["DEX"] = int(input("Set dexterity: "))
+                self.attributes["CON"] = int(input("Set constitution: "))
+                self.attributes["WIS"] = int(input("Set wisdom: "))
+                self.attributes["INT"] = int(input("Set intelligence: "))
+                self.attributes["CHA"] = int(input("Set charisma: "))
+        else:
+            self.attributes["STR"] = int(input("Set strength: "))
+            self.attributes["DEX"] = int(input("Set dexterity: "))
+            self.attributes["CON"] = int(input("Set constitution: "))
+            self.attributes["WIS"] = int(input("Set wisdom: "))
+            self.attributes["INT"] = int(input("Set intelligence: "))
+            self.attributes["CHA"] = int(input("Set charisma: "))
         self.generate_ability_mods()
         self.max_health = hit_dice + self.ability_mods["CON"]
         for i in range(1, self.level):
             self.max_health += randrange(1, self.hit_dice + 1) + self.ability_mods["CON"]
+        if self.level >= subclass_level:
+            self.new_subclass()
+        if self.level >= 4:
+            self.new_feat()
+        if self.spellcaster:
+            for i in range(self.level):
+                self.new_spell()
+
 
     def generate_ability_mods(self):
         self.ability_mods = {}
@@ -67,13 +91,18 @@ class Character:
         self.subclass = input(f"Please choose a {self.title} subclass: ")
         print(f"{self.name} is now a {self.title} of the {self.subclass} subclass!")
 
-    def check_feats(self):
+    def get_feats(self):
+        print(f"Feats for {self.name}:")
         for feat in self.feats:
             print(feat)
 
-    def check_spells(self):
-        for spell in self.spells:
-            print(spell)
+    def get_spells(self):
+        if self.spellcaster:
+            print(f"Spells for {self.name}:")
+            for spell in self.spells:
+                print(spell)
 
     def __str__(self):
+        if self.subclass != None:
+            return f"{self.name} is a level {self.level} {self.subclass} {self.title} with {self.max_health} total hit points."
         return f"{self.name} is a level {self.level} {self.title} with {self.max_health} total hit points."

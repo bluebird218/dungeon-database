@@ -2,15 +2,15 @@ from character import *
 
 class Barbarian(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 12, "barbarian", False)
+        super().__init__(name, level, 12, "barbarian", False, 3)
     
 class Bard(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 8, "bard", True)
+        super().__init__(name, level, 8, "bard", True, 3)
 
 class Cleric(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 8, "cleric", True)
+        super().__init__(name, level, 8, "cleric", True, 2)
 
     def level_up(self):
         self.level += 1
@@ -26,7 +26,7 @@ class Cleric(Character):
 
 class Druid(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 8, "druid", True)
+        super().__init__(name, level, 8, "druid", True, 2)
 
     def level_up(self):
         self.level += 1
@@ -42,7 +42,7 @@ class Druid(Character):
     
 class Fighter(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 10, "fighter", False)
+        super().__init__(name, level, 10, "fighter", False, 3)
 
     def level_up(self):
         self.level += 1
@@ -56,19 +56,19 @@ class Fighter(Character):
 
 class Monk(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 8, "monk", False)    
+        super().__init__(name, level, 8, "monk", False, 3)    
     
 class Paladin(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 10, "paladin", True)
+        super().__init__(name, level, 10, "paladin", True, 3)
     
 class Ranger(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 10, "ranger", True)
+        super().__init__(name, level, 10, "ranger", True, 3)
     
 class Rogue(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 6, "rogue", False)
+        super().__init__(name, level, 6, "rogue", False, 3)
     
     def level_up(self):
         self.level += 1
@@ -112,7 +112,7 @@ class Warlock(Character):
 
 class Wizard(Character):
     def __init__(self, name, level):
-        super().__init__(name, level, 6, "wizard", True)
+        super().__init__(name, level, 6, "wizard", True, 2)
 
     def level_up(self):
         self.level += 1

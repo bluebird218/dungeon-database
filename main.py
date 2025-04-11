@@ -1,10 +1,9 @@
 from classes import *
 
 all_characters = []
-chr1 = Bard("Vatti", 2)
-chr2 = Druid("Mike", 5)
-all_characters.append(chr1)
-all_characters.append(chr2)
+
+def main():
+    user_prompt()
 
 
 def create_character():
@@ -41,10 +40,24 @@ def create_character():
     print(chr)
     return chr
 
+def print_to_file():
+    file_name = input("What would you like your file to be called? No spaces and without the .txt, please: ")
+    f = open(f"{file_name}.txt", "w")
+    for char in all_characters:
+        f.write(str(char))
+        f.write("\n")
+        f.write(f"Ability Scores: {str(char.attributes)}")
+        f.write("\n")
+        f.write(f"Feats: {str(char.feats)}")
+        f.write("\n")
+        f.write(f"Spells: {str(char.spells)}")
+        f.write("\n")
+    f.close()
+
 
 def user_prompt():
     while(True):
-        response = input("Hello user! Would you like to 'Create', 'Check', or 'Exit'? ").lower()
+        response = input("Hello user! Would you like to 'Create', 'Check', 'Print', or 'Exit'? ").lower()
         if response == "create":
             all_characters.append(create_character())
         elif response == "check":
@@ -54,18 +67,20 @@ def user_prompt():
             choice = int(input("Which character would you like to check? (Please select using index): "))
             try:
                 character = all_characters[choice] 
-                choice = input(f"Would you like to 'check spells', 'check feats', or 'level up' for {character.name}? ").lower()
-                if choice == "check spells":
-                    character.check_spells()
-                elif choice == "check feats":
-                    character.check_feats()
+                choice = input(f"Would you like to check 'spells', check 'feats', or 'level up' for {character.name}? ").lower()
+                if choice == "spells":
+                    character.get_spells()
+                elif choice == "feats":
+                    character.get_feats()
                 elif choice == "level up":
                     character.level_up()
             except:
                 print("I'm sorry, something went wrong")
+        elif response == "print":
+            print_to_file()
         elif response == "exit":
             break
         else:
             print("I'm sorry, I didn't recognize that response.")
 
-user_prompt()
+main()
